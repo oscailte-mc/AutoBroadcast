@@ -1,6 +1,11 @@
 name: AutoBroadcast
 version: ${project.version}
-main: co.paradaux.hibernia.AutoBroadcast.AutoBroadcast
+main: io.paradaux.AutoBroadcast.AutoBroadcast
 api-version: 1.13
 authors: [Paradaux]
-description: Simple utility plugin to send messages at a set interval. 
+description: Simple utility plugin to send messages at a set interval.
+commands:
+  autobroadcast:
+    description: Message from the author
+    usage: /autobroadcast
+

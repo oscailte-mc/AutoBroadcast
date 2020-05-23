@@ -1,0 +1,15 @@
+# Here you can change the internal messages, to your heart's content.
+# Voici où l'on peut changer les annonces utilisées.
+
+# Do not edit.
+locale-version: 1.1
+
+# This is what %autobroadcast_chatprefix% will be replaced with.
+# N.B this is not a PAPI Placeholder.
+chat-prefix: "&7[&cAutoBroadcast&7]&r"
+
+autobroadcast:
+  help_header: "%autobroadcast_chatprefix% &7Running AutoBroadcast v1.1.0 by &cParadaux.io&7!"
+  help_content:
+    - "&7Thank you for using &cAutoBroadcast&7. It's a labour of &clove&7. "
+    - "&7If you require any &csupport&7, join my &cdiscord&7 @ &chttps://paradaux.io/discord"

@@ -1,5 +1,19 @@
-# How long, in seconds between announcements.
+# Thank you for using Paradaux's AutoBroadcast v1.1.0
+
+# If you're having issues, and your custom announcements are not showing, it's
+# because this .yml file is invalid. Stick it in an online parser to find the issue
+# or join my discord @ https://paradaux.io/discord
+
+# How long, in seconds, between announcements.
 interval: 300
+
+# Do not edit, this will break the plugin.
+config-version: 1.1
+
+# This enables functionality which may break your AutoBroadcast Experience.
+# Any user with the "autobroadcast.bypass" permission will not receive broadcasts (including operators and users with "*")
+# For this reason, this is disabled by default.
+enable-bypass-permission: false
 
 # Make multiple-line announcements by using \n to begin a new line.
 # Full color-codes are supported.
