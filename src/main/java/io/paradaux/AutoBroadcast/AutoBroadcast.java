@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 public final class AutoBroadcast extends JavaPlugin {
 
