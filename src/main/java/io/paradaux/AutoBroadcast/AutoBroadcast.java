@@ -1,9 +1,10 @@
+/*
+ * Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
+ */
+
 package io.paradaux.AutoBroadcast;
 
-import io.paradaux.AutoBroadcast.API.BroadcastManager;
-import io.paradaux.AutoBroadcast.API.ConfigurationCache;
-import io.paradaux.AutoBroadcast.API.LocaleCache;
-import io.paradaux.AutoBroadcast.API.LocaleManager;
+import io.paradaux.AutoBroadcast.API.*;
 import io.paradaux.AutoBroadcast.Commands.AutoBroadcastCMD;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,8 +13,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class AutoBroadcast extends JavaPlugin {
+
+    private static Logger logger;
+    public static Logger getPluginLogger() { return logger; }
 
     private static Plugin plugin;
     public static Plugin getPlugin() { return plugin; }
@@ -34,19 +41,28 @@ public final class AutoBroadcast extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.getConfig().options().copyDefaults();
-        saveDefaultConfig();
-        saveResource("locale.yml", false);
-
+        logger = this.getLogger();
         plugin = this;
-        ConfigurationCache = new ConfigurationCache();
-        localeFile = new File(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast").getDataFolder(), "locale.yml");
-        locale = LocaleManager.initiateDataFile();
-        localeCache = new LocaleCache();
 
-        System.out.println("\n" +
+        configHandler();
+        startupMessage();
+        localeHandler();
+        registerCommands();
+        beginBroadcasts();
+    }
+
+    @Override
+    public void onDisable() {}
+
+
+    public void beginBroadcasts() {
+        broadcastChain = BroadcastManager.createTimer();
+    }
+
+    public void startupMessage() {
+        logger.log(Level.FINE, "\n" +
                 "+ ------------------------------------ +\n" +
-                "|     Running AutoBroadcast v1.1.0     |\n" +
+                "|     Running AutoBroadcast v1.1.1     |\n" +
                 "|       © Rían Errity (Paradaux)       |\n" +
                 "|         https://paradaux.io          |\n" +
                 "+ ------------------------------------ +\n" +
@@ -54,12 +70,33 @@ public final class AutoBroadcast extends JavaPlugin {
                 "Are you looking for a freelance plugin developer?\n" +
                 "Think no further than Paradaux.io! rian@paradaux.io / Rían#6500"
         );
-
-        this.getCommand("autobroadcast").setExecutor(new AutoBroadcastCMD());
-
-        broadcastChain = BroadcastManager.createTimer();
     }
 
-    @Override
-    public void onDisable() {}
+    public void configHandler() {
+        this.getConfig().options().copyDefaults();
+        saveDefaultConfig();
+        saveResource("locale.yml", false);
+        ConfigurationCache = new ConfigurationCache();
+    }
+
+    public void localeHandler() {
+        localeFile = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "locale.yml");
+        locale = LocaleManager.initiateDataFile();
+        localeCache = new LocaleCache();
+
+    }
+
+    public void registerCommands() {
+        Objects.requireNonNull(this.getCommand("autobroadcast")).setExecutor(new AutoBroadcastCMD());
+    }
+
+    public void versionChecker() {
+        new VersionChecker(this, 69377).getVersion(version -> {
+            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+                logger.info("There are no new updates available");
+            } else {
+                logger.info("There is a new update available. \n Please update: https://www.spigotmc.org/resources/autobroadcast.69377/");
+            }
+        });
+    }
 }

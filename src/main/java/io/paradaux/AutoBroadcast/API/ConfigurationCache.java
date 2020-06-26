@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
+ */
+
 package io.paradaux.AutoBroadcast.API;
 
 import io.paradaux.AutoBroadcast.AutoBroadcast;
@@ -25,40 +29,21 @@ public class ConfigurationCache {
         if (configVersion == 0.0) {
             p.getLogger().info("You were using an older version of AutoBroadcast before this. Switching configuration versions.");
             p.getConfig().set("config-version", 1.1);
-            config.options().header("# Comments were partially lost whilst updating the configuration. You can grab the 1.1.0 default \n # Configuration from the Spigot Resource page.");
+            config.options().header("# Comments were partially lost whilst updating the configuration. You can grab the 1.1.1 default \n # Configuration from the Spigot Resource page.");
             p.getLogger().info("Configuration has been updated. Comments were lost in the process.");
         }
-    }
-
-    public double getConfigVersion() {
-        return configVersion;
     }
 
     public boolean isUseBypassPermission() {
         return useBypassPermission;
     }
 
-    public void setUseBypassPermission(boolean useBypassPermission) {
-        this.useBypassPermission = useBypassPermission;
-    }
-
-    public void setConfigVersion(double configVersion) {
-        this.configVersion = configVersion;
-    }
-
     public List<String> getAnnouncements() {
         return announcements;
-    }
-
-    public void setAnnouncements(List<String> announcements) {
-        this.announcements = announcements;
     }
 
     public int getInterval() {
         return interval;
     }
 
-    public void setInterval(int interval) {
-        this.interval = interval;
-    }
 }

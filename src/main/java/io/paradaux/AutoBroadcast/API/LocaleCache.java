@@ -1,8 +1,14 @@
+/*
+ * Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
+ */
+
 package io.paradaux.AutoBroadcast.API;
 
 import io.paradaux.AutoBroadcast.AutoBroadcast;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.util.Objects;
 
 
 public class LocaleCache {
@@ -19,7 +25,7 @@ public class LocaleCache {
     }
 
     public String getString(String path) {
-        return colorise(locale.getString(path).replace("%autobroadcast_chatprefix%", getChatPrefix()));
+        return colorise(Objects.requireNonNull(locale.getString(path)).replace("%autobroadcast_chatprefix%", getChatPrefix()));
     }
 
     public String getStringList(String path) {
@@ -33,35 +39,17 @@ public class LocaleCache {
         this.autoBroadcastHelpContent = this.getStringList("autobroadcast.help_content");
     }
 
-    public double getLocaleVersion() {
-        return localeVersion;
-    }
-
-    public void setLocaleVersion(double localeVersion) {
-        this.localeVersion = localeVersion;
-    }
-
     public String getChatPrefix() {
         return chatPrefix;
-    }
-
-    public void setChatPrefix(String chatPrefix) {
-        this.chatPrefix = chatPrefix;
     }
 
     public String getAutoBroadcastHelpHeader() {
         return autoBroadcastHelpHeader;
     }
 
-    public void setAutoBroadcastHelpHeader(String autoBroadcastHelpHeader) {
-        this.autoBroadcastHelpHeader = autoBroadcastHelpHeader;
-    }
-
     public String getAutoBroadcastHelpContent() {
         return autoBroadcastHelpContent;
     }
 
-    public void setAutoBroadcastHelpContent(String autoBroadcastHelpContent) {
-        this.autoBroadcastHelpContent = autoBroadcastHelpContent;
-    }
+
 }
