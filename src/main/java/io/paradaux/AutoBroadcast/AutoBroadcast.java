@@ -62,7 +62,7 @@ public final class AutoBroadcast extends JavaPlugin {
     public void startupMessage() {
         logger.log(Level.FINE, "\n" +
                 "+ ------------------------------------ +\n" +
-                "|     Running AutoBroadcast v1.1.1     |\n" +
+                "|     Running AutoBroadcast v1.2.0     |\n" +
                 "|       © Rían Errity (Paradaux)       |\n" +
                 "|         https://paradaux.io          |\n" +
                 "+ ------------------------------------ +\n" +
