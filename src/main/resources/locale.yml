@@ -3,13 +3,14 @@
 # Voici où l'on peut changer les annonces utilisées.
 
 # Do not edit.
-locale-version: 1.1
+locale-version: 1.2
 
 # This is what %autobroadcast_chatprefix% will be replaced with.
 # N.B this is not a PAPI Placeholder.
 chat-prefix: "&7[&cAutoBroadcast&7]&r"
 
 autobroadcast:
+  reload_command: "%autobroadcast_chatprefix% AutoBroadcast has been reloaded."
   help_header: "%autobroadcast_chatprefix% &7Running AutoBroadcast v1.1.0 by &cParadaux.io&7!"
   help_content:
     - "&7Thank you for using &cAutoBroadcast&7. It's a labour of &clove&7. "

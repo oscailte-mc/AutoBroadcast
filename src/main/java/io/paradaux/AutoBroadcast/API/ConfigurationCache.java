@@ -21,13 +21,14 @@ public class ConfigurationCache {
     int interval;
     boolean enabledBstats;
 
-    public ConfigurationCache() {
+    public ConfigurationCache(FileConfiguration config) {
 
         if (configVersion == 1.0) {
             p.getLogger().info("You were using an older version of AutoBroadcast before this. Switching configuration versions.");
             p.getConfig().set("config-version", 1.1);
             p.getConfig().options().header("# Comments were partially lost whilst updating the configuration. You can grab the 1.1.1 default \n # Configuration from the Spigot Resource page.");
             p.getLogger().info("Configuration has been updated. Comments were lost in the process.");
+            p.saveConfig();
         }
 
         if (configVersion == 1.1) {
@@ -36,6 +37,7 @@ public class ConfigurationCache {
             p.getConfig().set("bstats_enabled", true);
             p.getConfig().options().header("# Comments were partially lost whilst updating the configuration. You can grab the 1.2.0 default \n # Configuration from the Spigot Resource page.");
             p.getLogger().info("Configuration has been updated. Comments were lost in the process.");
+            p.saveConfig();
         }
 
         this.configVersion = config.getDouble("config-version");

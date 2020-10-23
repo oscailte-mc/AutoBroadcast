@@ -16,7 +16,7 @@ public class VersionCheckerTest {
     @Test
     public void testVersionChecker() {
         new VersionChecker( 69377).getVersion(version -> {
-            assertEquals("1.1.0", version);
+            assertEquals("1.1.1", version);
             if (currentVersion.equalsIgnoreCase(version)) {
                 System.out.println("There are no new updates available");
             } else {

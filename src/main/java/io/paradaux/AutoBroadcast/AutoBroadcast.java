@@ -26,6 +26,8 @@ public final class AutoBroadcast extends JavaPlugin {
     private static Plugin plugin;
     public static Plugin getPlugin() { return plugin; }
 
+    public static File configurationFile;
+    private static YamlConfiguration config;
     private static ConfigurationCache configurationCache;
     public static ConfigurationCache getConfigurationCache() { return configurationCache; }
 
@@ -50,6 +52,7 @@ public final class AutoBroadcast extends JavaPlugin {
         localeHandler();
         registerCommands();
         registerBstats();
+        versionChecker();
         beginBroadcasts();
     }
 
@@ -75,16 +78,17 @@ public final class AutoBroadcast extends JavaPlugin {
     }
 
     public void configHandler() {
+        configurationFile = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "config.yml");
         this.getConfig().options().copyDefaults();
         saveDefaultConfig();
         saveResource("locale.yml", false);
-        configurationCache = new ConfigurationCache();
+        configurationCache = new ConfigurationCache(this.getConfig());
     }
 
     public void localeHandler() {
         localeFile = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "locale.yml");
         locale = LocaleManager.initiateDataFile();
-        localeCache = new LocaleCache();
+        localeCache = new LocaleCache(locale);
 
     }
 
@@ -106,4 +110,18 @@ public final class AutoBroadcast extends JavaPlugin {
             }
         });
     }
+
+    public void reloadConfiguration() {
+        // Reload Configuration
+        config = YamlConfiguration.loadConfiguration(configurationFile);
+        locale = YamlConfiguration.loadConfiguration(localeFile);
+
+        configurationCache = new ConfigurationCache(config);
+        localeCache = new LocaleCache(locale);
+
+        // Create new broadcast timer
+        broadcastChain.cancel();
+        broadcastChain = BroadcastManager.createTimer();
+    }
+
 }

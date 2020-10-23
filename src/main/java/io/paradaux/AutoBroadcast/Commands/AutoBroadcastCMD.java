@@ -11,12 +11,32 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class AutoBroadcastCMD implements CommandExecutor {
+
+    AutoBroadcast autoBroadcast;
+
+    public AutoBroadcastCMD(AutoBroadcast autoBroadcast) {
+        this.autoBroadcast = autoBroadcast;
+    }
+
     LocaleCache locale = AutoBroadcast.getLocaleCache();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        sender.sendMessage(locale.getAutoBroadcastHelpHeader());
-        sender.sendMessage(locale.getAutoBroadcastHelpContent());
+        if (args.length < 1) {
+            sender.sendMessage(locale.getAutoBroadcastHelpHeader());
+            sender.sendMessage(locale.getAutoBroadcastHelpContent());
+            return true;
+        }
+
+        switch (args[0]) {
+            case "reload": {
+                autoBroadcast.reloadConfiguration();
+                sender.sendMessage(locale.getAutoBroadcastReloadCommand());
+                return true;
+            }
+        }
+
         return true;
+
     }
 }
