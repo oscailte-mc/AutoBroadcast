@@ -6,6 +6,7 @@ package io.paradaux.AutoBroadcast;
 
 import io.paradaux.AutoBroadcast.API.*;
 import io.paradaux.AutoBroadcast.Commands.AutoBroadcastCMD;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -25,8 +26,8 @@ public final class AutoBroadcast extends JavaPlugin {
     private static Plugin plugin;
     public static Plugin getPlugin() { return plugin; }
 
-    private static ConfigurationCache ConfigurationCache;
-    public static ConfigurationCache getConfigurationCache() { return ConfigurationCache; }
+    private static ConfigurationCache configurationCache;
+    public static ConfigurationCache getConfigurationCache() { return configurationCache; }
 
     private static BukkitTask broadcastChain;
     public static BukkitTask getBroadcastChain() { return broadcastChain; }
@@ -48,6 +49,7 @@ public final class AutoBroadcast extends JavaPlugin {
         startupMessage();
         localeHandler();
         registerCommands();
+        registerBstats();
         beginBroadcasts();
     }
 
@@ -76,7 +78,7 @@ public final class AutoBroadcast extends JavaPlugin {
         this.getConfig().options().copyDefaults();
         saveDefaultConfig();
         saveResource("locale.yml", false);
-        ConfigurationCache = new ConfigurationCache();
+        configurationCache = new ConfigurationCache();
     }
 
     public void localeHandler() {
@@ -87,7 +89,12 @@ public final class AutoBroadcast extends JavaPlugin {
     }
 
     public void registerCommands() {
-        Objects.requireNonNull(this.getCommand("autobroadcast")).setExecutor(new AutoBroadcastCMD());
+        Objects.requireNonNull(this.getCommand("autobroadcast")).setExecutor(new AutoBroadcastCMD(this));
+    }
+
+    public void registerBstats() {
+        if (!configurationCache.isEnabledBstats()) return;
+        Metrics metrics = new Metrics(this, 9185);
     }
 
     public void versionChecker() {

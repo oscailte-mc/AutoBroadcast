@@ -19,19 +19,32 @@ public class ConfigurationCache {
     boolean useBypassPermission;
     List<String> announcements;
     int interval;
+    boolean enabledBstats;
 
     public ConfigurationCache() {
+
+        if (configVersion == 1.0) {
+            p.getLogger().info("You were using an older version of AutoBroadcast before this. Switching configuration versions.");
+            p.getConfig().set("config-version", 1.1);
+            p.getConfig().options().header("# Comments were partially lost whilst updating the configuration. You can grab the 1.1.1 default \n # Configuration from the Spigot Resource page.");
+            p.getLogger().info("Configuration has been updated. Comments were lost in the process.");
+        }
+
+        if (configVersion == 1.1) {
+            p.getLogger().info("You were using an older version of AutoBroadcast before this. Switching configuration versions.");
+            p.getConfig().set("config-version", 1.2);
+            p.getConfig().set("bstats_enabled", true);
+            p.getConfig().options().header("# Comments were partially lost whilst updating the configuration. You can grab the 1.2.0 default \n # Configuration from the Spigot Resource page.");
+            p.getLogger().info("Configuration has been updated. Comments were lost in the process.");
+        }
+
         this.configVersion = config.getDouble("config-version");
         this.announcements = config.getStringList("announcements");
         this.interval = config.getInt("interval");
         this.useBypassPermission = config.getBoolean("enable-bypass-permission");
+        this.enabledBstats = config.getBoolean("bstats_enabled");
 
-        if (configVersion == 0.0) {
-            p.getLogger().info("You were using an older version of AutoBroadcast before this. Switching configuration versions.");
-            p.getConfig().set("config-version", 1.1);
-            config.options().header("# Comments were partially lost whilst updating the configuration. You can grab the 1.1.1 default \n # Configuration from the Spigot Resource page.");
-            p.getLogger().info("Configuration has been updated. Comments were lost in the process.");
-        }
+
     }
 
     public boolean isUseBypassPermission() {
@@ -46,4 +59,5 @@ public class ConfigurationCache {
         return interval;
     }
 
+    public boolean isEnabledBstats() { return enabledBstats; }
 }
