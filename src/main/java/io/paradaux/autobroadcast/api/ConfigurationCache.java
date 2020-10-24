@@ -6,6 +6,7 @@ package io.paradaux.autobroadcast.api;
 
 import io.paradaux.autobroadcast.AutoBroadcast;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class ConfigurationCache {
         this.bstatsEnabled = bstatsEnabled;
     }
 
-    public ConfigurationCache(AutoBroadcast autoBroadcast, FileConfiguration config) {
+    public ConfigurationCache(AutoBroadcast autoBroadcast, YamlConfiguration config) {
         this.interval = config.getInt("interval", 300);
         this.configVersion = config.getDouble("config-version");
         this.enableBypassPermission = config.getBoolean("enable-bypass-permission", false);
