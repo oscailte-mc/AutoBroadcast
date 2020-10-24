@@ -1,10 +1,11 @@
 # Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
 name: AutoBroadcast
 version: ${project.version}
-main: io.paradaux.AutoBroadcast.AutoBroadcast
+main: io.paradaux.autobroadcast.AutoBroadcast
 api-version: 1.13
 authors: [Paradaux]
 description: Simple utility plugin to send messages at a set interval.
+softdepend: [PlaceholderAPI]
 commands:
   autobroadcast:
     description: Message from the author
