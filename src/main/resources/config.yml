@@ -26,7 +26,7 @@ announcements:
   - "&7Make sure to &cadd &7and &cconfigure&7 broadcasts in the config.yml file!"
   - "&7You can add an &cunlimited&7 amount of broadcasts."
   - "&cHere&7 is an \nexample of a \nmultiple-line message."
-  - "&7 Once you have &cupdated&7 your &cconfiguration&7 make sure to &creload&7 the plugin!\n&7/&cautobroadcast reload &7:: &creloads&7 the configuration files"
+  - "&7Once you have &cupdated&7 your &cconfiguration&7 make sure to &creload&7 the plugin!\n&7/&cautobroadcast reload &7:: &creloads&7 the configuration files"
 
 
 # To allow for the continued release of updates, I keep a track of how many people are using AutoBroadcast. You can see for yourself here:
