@@ -11,7 +11,7 @@ import static junit.framework.TestCase.assertEquals;
 public class VersionCheckerTest {
 
     VersionChecker vChecker;
-    String currentVersion = "1.1.1";
+    String currentVersion = "1.2.0";
 
     @Test
     public void testVersionChecker() {
