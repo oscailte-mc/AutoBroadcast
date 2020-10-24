@@ -2,9 +2,9 @@
  * Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
  */
 
-package io.paradaux.AutoBroadcast.API;
+package io.paradaux.autobroadcast.api;
 
-import io.paradaux.AutoBroadcast.AutoBroadcast;
+import io.paradaux.autobroadcast.AutoBroadcast;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

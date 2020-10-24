@@ -9,7 +9,7 @@
 interval: 300
 
 # Do not edit, this will break the plugin.
-config-version: 1.1
+config-version: 1.2
 
 # This enables functionality which may break your AutoBroadcast Experience.
 # Any user with the "autobroadcast.bypass" permission will not receive broadcasts (including operators and users with "*")
@@ -18,6 +18,7 @@ enable-bypass-permission: false
 
 # Make multiple-line announcements by using \n to begin a new line.
 # Full color-codes are supported.
+# As of 1.2.0 PlaceholderAPI placeholders are supported here! They are particular to the player being sent the message
 
 announcements:
   - "&7Thanks for installing &cAutoBroadcast&7!"
