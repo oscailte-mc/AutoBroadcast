@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
+ */
+
 package io.paradaux.autobroadcast.api;
 
 import io.paradaux.autobroadcast.AutoBroadcast;
@@ -5,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
-
 import java.util.List;
 
 public class BroadcastManager {

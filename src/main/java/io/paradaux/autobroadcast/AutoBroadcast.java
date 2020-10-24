@@ -4,29 +4,18 @@
 
 package io.paradaux.autobroadcast;
 
-import co.aikar.taskchain.BukkitTaskChainFactory;
-import co.aikar.taskchain.TaskChain;
-import co.aikar.taskchain.TaskChainFactory;
 import io.paradaux.autobroadcast.api.*;
 import io.paradaux.autobroadcast.commands.AutoBroadcastCMD;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.file.YamlConfiguration;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.util.Objects;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class AutoBroadcast extends JavaPlugin {
 
     /* Lazy Dependency Injection */
-
-    // Aikar's TaskChain Implementation
-    private static TaskChainFactory taskChainFactory;
-    public static <T> TaskChain<T> newChain() { return taskChainFactory.newChain(); }
 
     // Manages everything to do with the repeating broadcasts.
     private static BroadcastManager broadcastManager;
@@ -52,9 +41,6 @@ public final class AutoBroadcast extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        // Initialise Taskchain
-        taskChainFactory = BukkitTaskChainFactory.create(this);
-
         // First Run
         this.saveDefaultConfig();
         saveResource("locale.yml", false);
@@ -62,7 +48,7 @@ public final class AutoBroadcast extends JavaPlugin {
         // Pretty Ascii Art
         startupMessage();
 
-        // Ensure's the plugin is up-to-date with the version listed on spigot
+        // Ensures the plugin is up-to-date with the version listed on spigot
         versionChecker();
 
         // config/locale cache definitions
@@ -99,7 +85,7 @@ public final class AutoBroadcast extends JavaPlugin {
                 "+ ------------------------------------ +\n" +
                 "\n" +
                 "Are you looking for a freelance plugin developer?\n" +
-                "Think no further than Paradaux.io! rian@paradaux.io / Rían#6500"
+                "Think no further than Paradaux.io! rian@paradaux.io / Rían#6500\n"
         );
     }
 

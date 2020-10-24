@@ -1,5 +1,5 @@
 # Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
-# Thank you for using Paradaux's AutoBroadcast v1.1.1
+# Thank you for using Paradaux's AutoBroadcast v1.2.0
 
 # If you're having issues, and your custom announcements are not showing, it's
 # because this .yml file is invalid. Stick it in an online parser to find the issue
@@ -19,12 +19,14 @@ enable-bypass-permission: false
 # Make multiple-line announcements by using \n to begin a new line.
 # Full color-codes are supported.
 # As of 1.2.0 PlaceholderAPI placeholders are supported here! They are particular to the player being sent the message
+# Kyori Mini-message support will be coming in the near-ish future. (1.3.0)
 
 announcements:
   - "&7Thanks for installing &cAutoBroadcast&7!"
   - "&7Make sure to &cadd &7and &cconfigure&7 broadcasts in the config.yml file!"
   - "&7You can add an &cunlimited&7 amount of broadcasts."
   - "&cHere&7 is an \nexample of a \nmultiple-line message."
+  - "&7 Once you have &cupdated&7 your &cconfiguration&7 make sure to &creload&7 the plugin!\n&7/&cautobroadcast reload &7:: &creloads&7 the configuration files"
 
 
 # To allow for the continued release of updates, I keep a track of how many people are using AutoBroadcast. You can see for yourself here:

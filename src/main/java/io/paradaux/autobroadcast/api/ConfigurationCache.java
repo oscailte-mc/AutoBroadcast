@@ -5,10 +5,7 @@
 package io.paradaux.autobroadcast.api;
 
 import io.paradaux.autobroadcast.AutoBroadcast;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
-
 import java.util.List;
 
 public class ConfigurationCache {
