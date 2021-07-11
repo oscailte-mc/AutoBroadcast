@@ -4,51 +4,42 @@
 
 package io.paradaux.autobroadcast.api;
 
-import io.paradaux.autobroadcast.AutoBroadcast;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.util.List;
 
 public class ConfigurationCache {
 
-    int interval;
-    double configVersion;
-    boolean enableBypassPermission;
-    List<String> announcements;
-    boolean bstatsEnabled;
+    private static ConfigurationCache instance;
+    public static ConfigurationCache getInstance() { return instance; }
 
-    public ConfigurationCache(int interval, double configVersion, boolean enableBypassPermission, List<String> announcements, boolean bstatsEnabled) {
-        this.interval = interval;
-        this.configVersion = configVersion;
-        this.enableBypassPermission = enableBypassPermission;
-        this.announcements = announcements;
-        this.bstatsEnabled = bstatsEnabled;
+    private int interval;
+    private double configVersion;
+    private boolean enableBypassPermission;
+    private List<String> announcements;
+    private boolean bstatsEnabled;
+
+    // Prevent instantiation
+    private ConfigurationCache() {
+
     }
 
-    public ConfigurationCache(AutoBroadcast autoBroadcast, YamlConfiguration config) {
-        this.interval = config.getInt("interval", 300);
-        this.configVersion = config.getDouble("config-version");
-        this.enableBypassPermission = config.getBoolean("enable-bypass-permission", false);
-        this.announcements = config.getStringList("announcements");
-        this.bstatsEnabled = config.getBoolean("bstats_enabled", true);
+    public Builder builder() {
+        return new Builder();
     }
 
-    public int getInterval() {
-        return interval;
+    public static class Builder {
+
+        private final ConfigurationCache cache;
+
+        public Builder() {
+            cache = new ConfigurationCache();
+        }
+
+        public ConfigurationCache build() {
+            ConfigurationCache.instance = cache;
+            return cache;
+        }
+
     }
 
-    public double getConfigVersion() {
-        return configVersion;
-    }
-
-    public boolean isEnableBypassPermission() {
-        return enableBypassPermission;
-    }
-
-    public List<String> getAnnouncements() {
-        return announcements;
-    }
-
-    public boolean isBstatsEnabled() {
-        return bstatsEnabled;
-    }
 }

@@ -13,12 +13,15 @@ import java.util.List;
 
 public class BroadcastManager {
 
-    PlaceholderAPIWrapper placeholderAPIWrapper;
-    ConfigurationCache configurationCache;
-    List<String> announcements;
-    AutoBroadcast autoBroadcast;
-    BukkitTask task;
-    int currentPlace;
+    private static BroadcastManager instance;
+    public static BroadcastManager getInstance() { return instance; }
+
+    private final PlaceholderAPIWrapper placeholderAPIWrapper;
+    private final ConfigurationCache configurationCache;
+    private final List<String> announcements;
+    private final AutoBroadcast autoBroadcast;
+    private final BukkitTask task;
+    private int currentPlace;
 
     public BroadcastManager(AutoBroadcast autoBroadcast, ConfigurationCache configurationCache) {
         this.autoBroadcast = autoBroadcast;
@@ -27,6 +30,7 @@ public class BroadcastManager {
         placeholderAPIWrapper = new PlaceholderAPIWrapper();
 
         task = createTaskTimer();
+        instance = this;
     }
 
     public static String colourise(String string) {
