@@ -1,5 +1,5 @@
 # Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
-# Thank you for using Paradaux's AutoBroadcast v${project.version}
+# Thank you for using Paradaux's AutoBroadcast v2.0.0
 
 # How long, in seconds, between announcements. The default is 15 to show all the examples
 interval: 15
