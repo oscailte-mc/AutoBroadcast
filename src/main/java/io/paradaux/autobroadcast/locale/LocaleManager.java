@@ -1,6 +1,5 @@
 package io.paradaux.autobroadcast.locale;
 
-import io.paradaux.autobroadcast.config.ConfigurationUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -15,8 +14,8 @@ public class LocaleManager {
 
     private static final File locale = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "locale.properties");
 
-    private static LocaleManager instance;
     private static ResourceBundle bundle;
+
     public LocaleManager(Plugin p) {
         if (!locale.exists()) {
             p.saveResource("AutoBroadcast_en_US.properties", false);
@@ -28,15 +27,13 @@ public class LocaleManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        instance = this;
-    }
-
-    public static LocaleManager getInstance() {
-        return instance;
     }
 
     public static String get(String key) {
+        if (!bundle.containsKey(key)) {
+            return key;
+        }
+
         return bundle.getString(key);
     }
 }
