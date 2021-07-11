@@ -23,7 +23,7 @@ public class ConfigurationCache {
 
     }
 
-    public Builder builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -40,6 +40,33 @@ public class ConfigurationCache {
             return cache;
         }
 
+        public ConfigurationCache build(YamlConfiguration config) {
+            cache.interval = config.getInt("interval", 300);
+            cache.configVersion = config.getDouble("config-version");
+            cache.enableBypassPermission = config.getBoolean("enable-bypass-permission", false);
+            cache.announcements = config.getStringList("announcements");
+            cache.bstatsEnabled = config.getBoolean("bstats_enabled", true);
+            return build();
+        }
     }
 
+    public int getInterval() {
+        return interval;
+    }
+
+    public double getConfigVersion() {
+        return configVersion;
+    }
+
+    public boolean isEnableBypassPermission() {
+        return enableBypassPermission;
+    }
+
+    public List<String> getAnnouncements() {
+        return announcements;
+    }
+
+    public boolean isBstatsEnabled() {
+        return bstatsEnabled;
+    }
 }
