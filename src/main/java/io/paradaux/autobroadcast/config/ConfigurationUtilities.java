@@ -6,13 +6,17 @@ package io.paradaux.autobroadcast.config;
 
 import io.paradaux.autobroadcast.AutoBroadcast;
 import io.paradaux.autobroadcast.BroadcastManager;
+import io.paradaux.autobroadcast.adventure.AdventureImpl;
 import io.paradaux.autobroadcast.locale.LocaleLogger;
 import io.paradaux.autobroadcast.locale.LocaleManager;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -25,7 +29,7 @@ public class ConfigurationUtilities {
     private final File configFile;
 
     public ConfigurationUtilities(AutoBroadcast autoBroadcast) {
-        configFile = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "config.yml");
+        configFile = new File(autoBroadcast.getDataFolder(), "config.yml");
         this.autoBroadcast = autoBroadcast;
         instance = this;
     }
@@ -42,10 +46,6 @@ public class ConfigurationUtilities {
         }
     }
 
-    public void update() {
-        this.updateConfiguration(this.getConfig());
-    }
-
     public void reload() {
         BroadcastManager broadcastManager = BroadcastManager.getInstance();
         ConfigurationCache.builder().build(this.getConfig());
@@ -53,25 +53,14 @@ public class ConfigurationUtilities {
         new BroadcastManager(autoBroadcast);
     }
 
-    public void updateConfiguration(FileConfiguration config) {
+    public void update(FileConfiguration config) {
         Logger logger = autoBroadcast.getLogger();
 
-        if (config.getDouble("config-version") <= 1.0d) {
-            LocaleLogger.info("system.autobroadcast.config.update.version-change.start", String.valueOf(config.getDouble("config-version")));
-            config.set("config-version", 1.1d);
-
-            config.options().header(LocaleManager.get("system.autobroadcast.config.update.version-chage.comments-lost"));
+        if (config.getDouble("config-version") < 2.0d) {
+            LocaleLogger.info("system.autobroadcast.config.update.version-change.legacy", String.valueOf(config.getDouble("config-version")));
+            configFile.renameTo(new File(autoBroadcast.getDataFolder(), "config.yml.legacy"));
+            autoBroadcast.saveDefaultConfig();
         }
-
-        if (config.getDouble("config-version") == 1.1d) {
-            LocaleLogger.info("system.autobroadcast.config.update.version-change.start", String.valueOf(config.getDouble("config-version")));
-            config.set("config-version", 1.2d);
-            config.set("bstats_enabled", true);
-
-            config.options().header(LocaleManager.get("system.autobroadcast.config.update.version-chage.comments-lost"));
-        }
-
-        this.setConfig(config);
     }
 
 }

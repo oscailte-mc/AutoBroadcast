@@ -28,7 +28,7 @@ public final class AutoBroadcast extends JavaPlugin {
         this.saveDefaultConfig();
 
         new LocaleManager(this);
-        
+
         LocaleLogger localeLogger = new LocaleLogger(LoggerFactory.getLogger("AutoBroadcast"));
 
         // Pretty Ascii Art
