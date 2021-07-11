@@ -2,15 +2,17 @@
  * Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
  */
 
-package io.paradaux.autobroadcast.api;
+package io.paradaux.autobroadcast.config;
 
 import io.paradaux.autobroadcast.AutoBroadcast;
+import io.paradaux.autobroadcast.BroadcastManager;
+import io.paradaux.autobroadcast.locale.LocaleLogger;
+import io.paradaux.autobroadcast.locale.LocaleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 

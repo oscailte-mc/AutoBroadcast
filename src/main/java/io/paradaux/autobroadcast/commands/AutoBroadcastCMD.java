@@ -4,9 +4,8 @@
 
 package io.paradaux.autobroadcast.commands;
 
-import io.paradaux.autobroadcast.AutoBroadcast;
-import io.paradaux.autobroadcast.api.ConfigurationUtilities;
-import io.paradaux.autobroadcast.api.LocaleManager;
+import io.paradaux.autobroadcast.config.ConfigurationUtilities;
+import io.paradaux.autobroadcast.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

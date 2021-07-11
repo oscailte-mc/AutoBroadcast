@@ -1,4 +1,4 @@
-package io.paradaux.autobroadcast.api;
+package io.paradaux.autobroadcast.locale;
 
 public class LocaleManager {
 

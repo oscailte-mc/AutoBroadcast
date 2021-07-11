@@ -4,11 +4,10 @@
 
 package io.paradaux.autobroadcast;
 
-import io.paradaux.autobroadcast.api.BroadcastManager;
-import io.paradaux.autobroadcast.api.ConfigurationCache;
-import io.paradaux.autobroadcast.api.ConfigurationUtilities;
-import io.paradaux.autobroadcast.api.LocaleLogger;
-import io.paradaux.autobroadcast.api.VersionChecker;
+import io.paradaux.autobroadcast.config.ConfigurationCache;
+import io.paradaux.autobroadcast.config.ConfigurationUtilities;
+import io.paradaux.autobroadcast.locale.LocaleLogger;
+import io.paradaux.autobroadcast.hooks.VersionChecker;
 import io.paradaux.autobroadcast.commands.AutoBroadcastCMD;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;

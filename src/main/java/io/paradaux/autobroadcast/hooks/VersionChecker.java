@@ -5,8 +5,9 @@
  * Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
  */
 
-package io.paradaux.autobroadcast.api;
+package io.paradaux.autobroadcast.hooks;
 
+import io.paradaux.autobroadcast.locale.LocaleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Consumer;
