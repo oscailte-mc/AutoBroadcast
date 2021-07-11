@@ -4,6 +4,7 @@
 
 package io.paradaux.autobroadcast;
 
+import io.paradaux.autobroadcast.adventure.AdventureImpl;
 import io.paradaux.autobroadcast.config.ConfigurationCache;
 import io.paradaux.autobroadcast.hooks.PlaceholderAPIWrapper;
 import org.bukkit.Bukkit;
@@ -17,6 +18,8 @@ public class BroadcastManager {
     private static BroadcastManager instance;
     public static BroadcastManager getInstance() { return instance; }
 
+    private final AdventureImpl adventure;
+
     private final PlaceholderAPIWrapper placeholderAPIWrapper;
     private final ConfigurationCache config;
     private final List<String> announcements;
@@ -27,15 +30,12 @@ public class BroadcastManager {
     public BroadcastManager(AutoBroadcast autoBroadcast) {
         this.autoBroadcast = autoBroadcast;
         this.config = ConfigurationCache.getInstance();
-        announcements = config.getAnnouncements();
-        placeholderAPIWrapper = new PlaceholderAPIWrapper();
+        this.announcements = config.getAnnouncements();
+        this.placeholderAPIWrapper = new PlaceholderAPIWrapper();
+        this.task = createTaskTimer();
+        this.adventure = AdventureImpl.getInstance();
 
-        task = createTaskTimer();
-        instance = this;
-    }
-
-    public static String colourise(String string) {
-        return ChatColor.translateAlternateColorCodes('&', string);
+        BroadcastManager.instance = this;
     }
 
     public BukkitTask createTaskTimer() {
@@ -51,14 +51,14 @@ public class BroadcastManager {
                 }
 
                 if (!placeholderAPIWrapper.isPresent()) {
-                    player.sendMessage(colourise(announcements.get(currentPlace)));
+                    adventure.sendMiniMessage(player, announcements.get(currentPlace));
                     nextAnnouncement();
                     return;
                 }
 
                 // Parse PlaceholderAPI Placeholders and colorise the template.
-                String message = placeholderAPIWrapper.withPlaceholders(player, colourise(announcements.get(currentPlace)));
-                player.sendMessage(message);
+                String message = placeholderAPIWrapper.withPlaceholders(player, announcements.get(currentPlace));
+                adventure.sendMiniMessage(player, message);
             }
 
             // Move onto the next announcement

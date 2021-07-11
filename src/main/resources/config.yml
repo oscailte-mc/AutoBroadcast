@@ -1,16 +1,8 @@
 # Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
-
-# Thank you for using Paradaux's AutoBroadcast v1.2.0
-
-# If you're having issues, and your custom announcements are not showing, it's
-# because this .yml file is invalid. Stick it in an online parser to find the issue
-# or join my discord @ https://paradaux.io/discord
+# Thank you for using Paradaux's AutoBroadcast v${project.version}
 
 # How long, in seconds, between announcements.
 interval: 300
-
-# Do not edit, this will break the plugin.
-config-version: 2.0
 
 # This enables functionality which may break your AutoBroadcast Experience.
 # Any user with the "autobroadcast.bypass" permission will not receive broadcasts (including operators and users with "*")
@@ -18,16 +10,13 @@ config-version: 2.0
 enable-bypass-permission: false
 
 # Make multiple-line announcements by using \n to begin a new line.
-# Full color-codes are supported.
-# As of 1.2.0 PlaceholderAPI placeholders are supported here! They are particular to the player being sent the message
-# Kyori Mini-message support will be coming in the near-ish future. (1.3.0)
 
 announcements:
-  - "&7Thanks for installing &cAutoBroadcast&7!"
-  - "&7Make sure to &cadd &7and &cconfigure&7 broadcasts in the config.yml file!"
-  - "&7You can add an &cunlimited&7 amount of broadcasts."
-  - "&cHere&7 is an \nexample of a \nmultiple-line message."
-  - "&7Once you have &cupdated&7 your &cconfiguration&7 make sure to &creload&7 the plugin!\n&7/&cautobroadcast reload &7:: &creloads&7 the configuration files"
+  - "<gray>Thanks for installing <red>AutoBroadcast<gray>!"
+  - "<gray>Make sure to <red>add <gray>and <red>configure<gray> broadcasts in the config.yml file!"
+  - "<gray>You can add an <red>unlimited<gray> amount of broadcasts."
+  - "<red>Here<gray> is an \nexample of a \nmultiple-line message."
+  - "<gray>Once you have <red>updated<gray> your <gray>configuration<gray> make sure to <red>reload<grey> the plugin!\n<gray>/<red>autobroadcast reload <gray>:: <red>reloads<gray> the configuration files"
 
 
 # To allow for the continued release of updates, I keep a track of how many people are using AutoBroadcast. You can see for yourself here:
@@ -35,17 +24,20 @@ announcements:
 bstats_enabled: true
 
 # bStats does not collect any personal data. Most of the collected data is information about the plugin's server like player count, online mode,
-# Minecraft version, Java version, and more. All data gets sent and stored completely anonymously. Server IPs are only stored for ratelimiting
+# Minecraft version, Java version, and more. All data gets sent and stored completely anonymously. Server IPs are only stored for rate-limiting
 # and not linked to the data. All data that is collected is publicly visible. If you are interested in what data is collected for your Minecraft
 # server, take a look at the pages for the plugins on your server. Please note that plugin authors can also send data that is customized for their plugin.
 # https://bstats.org/plugin/bukkit/HiberniaDiscord/8386
 
 # Force-disabling bStats
 
-# If you don't trust me, and my settings bstats has its own system to disable plugins' bstats.
+# If you don't trust me, and my settings, bStats has its own system to disable plugins' bStats.
 
 # Disabling bStats
 
 # If you don't want bStats to collect data from your server, you can disable it in the bStats config file. This file can be found in the /plugins/bStats/ folder.
 # bStats has nearly no effect on your server's performance and the sent data is completely anonymous. The collected data is important information for plugin authors
 # to improve their plugins and keep motivated. To value their work and effort, please keep bStats enabled.
+
+# Do not edit, this may break the plugin or your configuration file.
+config-version: 2.0

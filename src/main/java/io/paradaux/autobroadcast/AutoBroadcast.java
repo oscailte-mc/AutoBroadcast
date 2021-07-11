@@ -4,11 +4,12 @@
 
 package io.paradaux.autobroadcast;
 
+import io.paradaux.autobroadcast.adventure.AdventureImpl;
+import io.paradaux.autobroadcast.commands.AutoBroadcastCMD;
 import io.paradaux.autobroadcast.config.ConfigurationCache;
 import io.paradaux.autobroadcast.config.ConfigurationUtilities;
-import io.paradaux.autobroadcast.locale.LocaleLogger;
 import io.paradaux.autobroadcast.hooks.VersionChecker;
-import io.paradaux.autobroadcast.commands.AutoBroadcastCMD;
+import io.paradaux.autobroadcast.locale.LocaleLogger;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.LoggerFactory;
@@ -38,8 +39,12 @@ public final class AutoBroadcast extends JavaPlugin {
         ConfigurationUtilities.getInstance().update(); // Make sure configuration files are up-to-date
         ConfigurationCache.builder().build(ConfigurationUtilities.getInstance().getConfig());
 
+        // Register Adventure
+        new AdventureImpl(this);
+
         // Actual Broadcasting Mechanism
         new BroadcastManager(this);
+
 
         // Provides anonymous usage statistics
         registerBstats();
