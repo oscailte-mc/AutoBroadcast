@@ -4,23 +4,29 @@
 
 package io.paradaux.autobroadcast;
 
-import io.paradaux.autobroadcast.api.*;
+import io.paradaux.autobroadcast.api.BroadcastManager;
+import io.paradaux.autobroadcast.api.ConfigurationCache;
+import io.paradaux.autobroadcast.api.ConfigurationUtilities;
+import io.paradaux.autobroadcast.api.LocaleLogger;
+import io.paradaux.autobroadcast.api.VersionChecker;
 import io.paradaux.autobroadcast.commands.AutoBroadcastCMD;
 import org.bstats.bukkit.Metrics;
-
 import org.bukkit.plugin.java.JavaPlugin;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public final class AutoBroadcast extends JavaPlugin {
+
+    private static Metrics metrics;
 
     @Override
     public void onEnable() {
 
         // First Run
         this.saveDefaultConfig();
-        saveResource("locale.yml", false);
+
+        LocaleLogger localeLogger = new LocaleLogger(LoggerFactory.getLogger("AutoBroadcast"));
 
         // Pretty Ascii Art
         LocaleLogger.info("system.autobroadcast.startup");
@@ -31,13 +37,10 @@ public final class AutoBroadcast extends JavaPlugin {
         // config/locale cache definitions
         new ConfigurationUtilities(this);
         ConfigurationUtilities.getInstance().update(); // Make sure configuration files are up-to-date
-
-        configurationCache = new ConfigurationCache(this, configurationUtilities.getConfig());
-        localeCache = new LocaleCache(configurationUtilities.getLocale());
+        ConfigurationCache.builder().build(ConfigurationUtilities.getInstance().getConfig());
 
         // Actual Broadcasting Mechanism
-
-        new BroadcastManager(this, configurationCache);
+        new BroadcastManager(this);
 
         // Provides anonymous usage statistics
         registerBstats();
@@ -48,22 +51,24 @@ public final class AutoBroadcast extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        BroadcastManager.getInstance().cancel();
+        if (BroadcastManager.getInstance() != null) {
+            BroadcastManager.getInstance().cancel();
+        }
     }
 
-
     public void registerCommands() {
-        Objects.requireNonNull(this.getCommand("autobroadcast")).setExecutor(new AutoBroadcastCMD(this));
+        Objects.requireNonNull(this.getCommand("autobroadcast")).setExecutor(new AutoBroadcastCMD());
     }
 
     public void registerBstats() {
-        if (!configurationCache.isBstatsEnabled()) return;
-        Metrics metrics = new Metrics(this, 9185);
+        if (!ConfigurationCache.getInstance().isBstatsEnabled()) {
+            return;
+        }
+
+        metrics = new Metrics(this, 9185);
     }
 
     public void versionChecker() {
-        Logger logger = this.getLogger();
-
         new VersionChecker(this, 69377).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
                 LocaleLogger.info("system.autobroadcast.update.unavailable");
