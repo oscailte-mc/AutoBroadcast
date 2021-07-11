@@ -18,9 +18,7 @@ public final class AutoBroadcast extends JavaPlugin {
     /* Lazy Dependency Injection */
 
     // Manages everything to do with the repeating broadcasts.
-    private static BroadcastManager broadcastManager;
-    public static BroadcastManager getBroadcastManager() { return broadcastManager; }
-    public void setBroadcastManager(BroadcastManager broadcast) { broadcastManager = broadcast; }
+
 
     // Handles config.yml/locale.yml
     private static ConfigurationUtilities configurationUtilities;
@@ -35,8 +33,6 @@ public final class AutoBroadcast extends JavaPlugin {
     private static LocaleCache localeCache;
     public static LocaleCache getLocaleCache() { return localeCache; }
     public void setLocaleCache(LocaleCache locale) { localeCache = locale; }
-
-
 
     @Override
     public void onEnable() {
@@ -60,7 +56,7 @@ public final class AutoBroadcast extends JavaPlugin {
 
         // Actual Broadcasting Mechanism
 
-        broadcastManager = new BroadcastManager(this, configurationCache);
+        new BroadcastManager(this, configurationCache);
 
         // Provides anonymous usage statistics
         registerBstats();
@@ -71,15 +67,13 @@ public final class AutoBroadcast extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        broadcastManager.cancel();
+        BroadcastManager.getInstance().cancel();
     }
-
-
 
     public void startupMessage() {
         getLogger().info( "\n" +
                 "+ ------------------------------------ +\n" +
-                "|     Running AutoBroadcast v1.2.0     |\n" +
+                "|     Running AutoBroadcast v2.0.0     |\n" +
                 "|       © Rían Errity (Paradaux)       |\n" +
                 "|         https://paradaux.io          |\n" +
                 "+ ------------------------------------ +\n" +

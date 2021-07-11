@@ -2,7 +2,7 @@
 name: AutoBroadcast
 version: ${project.version}
 main: io.paradaux.autobroadcast.AutoBroadcast
-api-version: 1.13
+api-version: 1.17
 authors: [Paradaux]
 description: Simple utility plugin to send messages at a set interval.
 softdepend: [PlaceholderAPI]
