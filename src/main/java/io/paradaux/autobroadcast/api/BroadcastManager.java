@@ -17,16 +17,16 @@ public class BroadcastManager {
     public static BroadcastManager getInstance() { return instance; }
 
     private final PlaceholderAPIWrapper placeholderAPIWrapper;
-    private final ConfigurationCache configurationCache;
+    private final ConfigurationCache config;
     private final List<String> announcements;
     private final AutoBroadcast autoBroadcast;
     private final BukkitTask task;
     private int currentPlace;
 
-    public BroadcastManager(AutoBroadcast autoBroadcast, ConfigurationCache configurationCache) {
+    public BroadcastManager(AutoBroadcast autoBroadcast) {
         this.autoBroadcast = autoBroadcast;
-        this.configurationCache = configurationCache;
-        announcements = configurationCache.getAnnouncements();
+        this.config = ConfigurationCache.getInstance();
+        announcements = config.getAnnouncements();
         placeholderAPIWrapper = new PlaceholderAPIWrapper();
 
         task = createTaskTimer();
@@ -45,7 +45,7 @@ public class BroadcastManager {
             // For every online player
             for (Player player : autoBroadcast.getServer().getOnlinePlayers()) {
                 // If the player is ineligible to receive announcements
-                if (configurationCache.enableBypassPermission) {
+                if (config.isEnableBypassPermission()) {
                     if (player.hasPermission("autobroadcast.bypass")) return;
                 }
 
@@ -62,7 +62,7 @@ public class BroadcastManager {
 
             // Move onto the next announcement
             nextAnnouncement();
-        }), 60, configurationCache.getInterval() * 20);
+        }), 60, config.getInterval() * 20L);
     }
 
     public void nextAnnouncement() {

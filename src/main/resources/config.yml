@@ -35,7 +35,7 @@ announcements:
 bstats_enabled: true
 
 # bStats does not collect any personal data. Most of the collected data is information about the plugin's server like player count, online mode,
-#  Minecraft version, Java version, and more. All data gets sent and stored completely anonymously. Server IPs are only stored for ratelimiting
+# Minecraft version, Java version, and more. All data gets sent and stored completely anonymously. Server IPs are only stored for ratelimiting
 # and not linked to the data. All data that is collected is publicly visible. If you are interested in what data is collected for your Minecraft
 # server, take a look at the pages for the plugins on your server. Please note that plugin authors can also send data that is customized for their plugin.
 # https://bstats.org/plugin/bukkit/HiberniaDiscord/8386

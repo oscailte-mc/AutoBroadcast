@@ -5,20 +5,14 @@
 package io.paradaux.autobroadcast.commands;
 
 import io.paradaux.autobroadcast.AutoBroadcast;
+import io.paradaux.autobroadcast.api.ConfigurationUtilities;
+import io.paradaux.autobroadcast.api.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class AutoBroadcastCMD implements CommandExecutor {
-
-    AutoBroadcast autoBroadcast;
-    LocaleCache locale;
-
-    public AutoBroadcastCMD(AutoBroadcast autoBroadcast) {
-        this.autoBroadcast = autoBroadcast;
-        this.locale = AutoBroadcast.getLocaleCache();
-    }
 
     public static String colourise(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
@@ -28,21 +22,21 @@ public class AutoBroadcastCMD implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (args.length <= 0) {
-            sender.sendMessage(colourise(locale.getHelpHeader()));
-            sender.sendMessage(colourise(locale.getHelpContent()));
+            sender.sendMessage(colourise(LocaleManager.get("command.autobroadcast.content")));
             return true;
         }
 
         if ("reload".equals(args[0])) {
-            if (!sender.hasPermission("autobroadcast.reload")) return true;
-            AutoBroadcast.getConfigurationUtilities().reload();
-            sender.sendMessage(colourise(locale.getReloadCommand()));
+            if (!sender.hasPermission("autobroadcast.reload")) {
+                return true;
+            }
+
+            ConfigurationUtilities.getInstance().reload();
+            sender.sendMessage(colourise(LocaleManager.get("command.autobroadcast.reload.content")));
             return true;
         }
 
-        sender.sendMessage(colourise(locale.getHelpHeader()));
-        sender.sendMessage(colourise(locale.getHelpContent()));
+        sender.sendMessage(colourise(LocaleManager.get("command.autobroadcast.content")));
         return true;
-
     }
 }
