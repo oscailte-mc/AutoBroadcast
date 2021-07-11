@@ -10,6 +10,7 @@ import io.paradaux.autobroadcast.config.ConfigurationCache;
 import io.paradaux.autobroadcast.config.ConfigurationUtilities;
 import io.paradaux.autobroadcast.hooks.VersionChecker;
 import io.paradaux.autobroadcast.locale.LocaleLogger;
+import io.paradaux.autobroadcast.locale.LocaleManager;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,8 @@ public final class AutoBroadcast extends JavaPlugin {
         // First Run
         this.saveDefaultConfig();
 
+        new LocaleManager(this);
+        
         LocaleLogger localeLogger = new LocaleLogger(LoggerFactory.getLogger("AutoBroadcast"));
 
         // Pretty Ascii Art
@@ -36,7 +39,7 @@ public final class AutoBroadcast extends JavaPlugin {
 
         // config/locale cache definitions
         new ConfigurationUtilities(this);
-        ConfigurationUtilities.getInstance().update(); // Make sure configuration files are up-to-date
+        ConfigurationUtilities.getInstance().update(this.getConfig()); // Make sure configuration files are up-to-date
         ConfigurationCache.builder().build(ConfigurationUtilities.getInstance().getConfig());
 
         // Register Adventure
@@ -44,7 +47,6 @@ public final class AutoBroadcast extends JavaPlugin {
 
         // Actual Broadcasting Mechanism
         new BroadcastManager(this);
-
 
         // Provides anonymous usage statistics
         registerBstats();
