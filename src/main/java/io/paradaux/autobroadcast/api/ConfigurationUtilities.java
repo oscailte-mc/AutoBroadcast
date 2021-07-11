@@ -21,28 +21,15 @@ public class ConfigurationUtilities {
 
     private final AutoBroadcast autoBroadcast;
     private final File configFile;
-    private final File localeFile;
 
     public ConfigurationUtilities(AutoBroadcast autoBroadcast) {
         configFile = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "config.yml");
-        localeFile = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "locale.yml");
         this.autoBroadcast = autoBroadcast;
-    }
-
-    public YamlConfiguration getLocale() {
-        return YamlConfiguration.loadConfiguration(localeFile);
+        instance = this;
     }
 
     public YamlConfiguration getConfig() {
         return YamlConfiguration.loadConfiguration(configFile);
-    }
-
-    public void setLocale(FileConfiguration locale) {
-        try {
-            locale.save(localeFile);
-        } catch (IOException exception) {
-            autoBroadcast.getLogger().severe("Error whilst updating locale.");
-        }
     }
 
     public void setConfig(FileConfiguration config) {
@@ -59,9 +46,9 @@ public class ConfigurationUtilities {
 
     public void reload() {
         BroadcastManager broadcastManager = BroadcastManager.getInstance();
-        autoBroadcast.setConfigurationCache(new ConfigurationCache(autoBroadcast, this.getConfig()));
+        ConfigurationCache.builder().build(this.getConfig());
         broadcastManager.cancel();
-        new BroadcastManager(autoBroadcast, ConfigurationCache.getInstance());
+        new BroadcastManager(autoBroadcast);
     }
 
     public void updateConfiguration(FileConfiguration config) {
