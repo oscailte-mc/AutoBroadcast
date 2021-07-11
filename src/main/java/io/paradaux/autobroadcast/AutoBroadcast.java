@@ -34,6 +34,7 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public final class AutoBroadcast extends JavaPlugin {
@@ -68,7 +69,7 @@ public final class AutoBroadcast extends JavaPlugin {
         new BroadcastManager(this);
 
         // Provides anonymous usage statistics
-        registerBstats();
+        registerBStats();
 
         // Register Commands
         registerCommands();
@@ -78,6 +79,11 @@ public final class AutoBroadcast extends JavaPlugin {
     public void onDisable() {
         if (BroadcastManager.getInstance() != null) {
             BroadcastManager.getInstance().cancel();
+            try {
+                AdventureImpl.getInstance().close();
+            } catch (IOException e) {
+                LocaleLogger.error("system.error.generic", e.toString());
+            }
         }
     }
 
@@ -85,7 +91,7 @@ public final class AutoBroadcast extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("autobroadcast")).setExecutor(new AutoBroadcastCMD());
     }
 
-    public void registerBstats() {
+    public void registerBStats() {
         if (!ConfigurationCache.getInstance().isBstatsEnabled()) {
             return;
         }
