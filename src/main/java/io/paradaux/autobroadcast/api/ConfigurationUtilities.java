@@ -16,9 +16,12 @@ import java.util.logging.Logger;
 
 public class ConfigurationUtilities {
 
-    AutoBroadcast autoBroadcast;
-    File configFile;
-    File localeFile;
+    private static ConfigurationUtilities instance;
+    public static ConfigurationUtilities getInstance() { return instance; }
+
+    private final AutoBroadcast autoBroadcast;
+    private final File configFile;
+    private final File localeFile;
 
     public ConfigurationUtilities(AutoBroadcast autoBroadcast) {
         configFile = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "config.yml");
@@ -52,60 +55,34 @@ public class ConfigurationUtilities {
 
     public void update() {
         this.updateConfiguration(this.getConfig());
-        this.updateLocale(this.getLocale());
     }
 
     public void reload() {
-        BroadcastManager broadcastManager = AutoBroadcast.getBroadcastManager();
+        BroadcastManager broadcastManager = BroadcastManager.getInstance();
         autoBroadcast.setConfigurationCache(new ConfigurationCache(autoBroadcast, this.getConfig()));
-        autoBroadcast.setLocaleCache(new LocaleCache(this.getLocale()));
         broadcastManager.cancel();
-        autoBroadcast.setBroadcastManager(new BroadcastManager(autoBroadcast, AutoBroadcast.getConfigurationCache()));
+        new BroadcastManager(autoBroadcast, ConfigurationCache.getInstance());
     }
 
     public void updateConfiguration(FileConfiguration config) {
         Logger logger = autoBroadcast.getLogger();
 
         if (config.getDouble("config-version") <= 1.0d) {
-            logger.info("Switching config versions from: " + config.getDouble("config-version") + " to: 1.1");
+            LocaleLogger.info("system.autobroadcast.config.update.version-change.start", String.valueOf(config.getDouble("config-version")));
             config.set("config-version", 1.1d);
 
-            config.options().header("Comments were partially lost whilst updating the config. You can grab the 1.2.0 default \nConfig from the Spigot Resource page.");
-            logger.info("Config has been updated. Comments were lost in the process due to Spigot limitations.");
+            config.options().header(LocaleManager.get("system.autobroadcast.config.update.version-chage.comments-lost"));
         }
 
         if (config.getDouble("config-version") == 1.1d) {
-            logger.info("Switching locale versions from: " + config.getDouble("config-version") + " to: 1.2");
+            LocaleLogger.info("system.autobroadcast.config.update.version-change.start", String.valueOf(config.getDouble("config-version")));
             config.set("config-version", 1.2d);
             config.set("bstats_enabled", true);
 
-            config.options().header("Comments were partially lost whilst updating the config. You can grab the 1.2.0 default \nConfig from the Spigot Resource page.");
-            logger.info("Config has been updated. Comments were lost in the process due to Spigot limitations.");
+            config.options().header(LocaleManager.get("system.autobroadcast.config.update.version-chage.comments-lost"));
         }
 
         this.setConfig(config);
     }
 
-    public void updateLocale(FileConfiguration locale) {
-
-        Logger logger = autoBroadcast.getLogger();
-
-        // No changes in 1.0
-
-        if (locale.getDouble("locale-version") <= 1.1d) {
-            logger.info("Switching locale versions from: " + locale.getDouble("locale-version") + " to: 1.2");
-
-            locale.set("locale-version", 1.2d);
-            locale.set("autobroadcast.reload_command", "%autobroadcast_chatprefix% &7AutoBroadcast has been reloaded.");
-
-            // Adding a line to the help content is hard.
-            List<String> tempList = locale.getStringList("autobroadcast.help_content");
-            tempList.add("&7To &creload&7 the configuration run /&cautobroadcast reload");
-            locale.set("autobroadcast.help_content", tempList);
-
-            locale.options().header("# Comments were partially lost whilst updating the locale. You can grab the 1.2.0 default \nLocale from the Spigot Resource page.");
-            logger.info("Locale has been updated. Comments were lost in the process due to Spigot limitations.");
-        }
-        this.setLocale(locale);
-    }
 }

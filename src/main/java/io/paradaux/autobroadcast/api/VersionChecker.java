@@ -18,8 +18,8 @@ import java.util.Scanner;
 
 public class VersionChecker {
 
-    Plugin plugin;
-    int resourceId;
+    private final Plugin plugin;
+    private final int resourceId;
 
     public VersionChecker(Plugin plugin, int resourceId) {
         this.plugin = plugin;
@@ -40,7 +40,7 @@ public class VersionChecker {
                         consumer.accept(scanner.next());
                     }
                 } catch (IOException exception) {
-                    this.plugin.getLogger().info("Cannot look for updates: " + exception.getMessage());
+                    LocaleLogger.error("system.autobroadcast.update.error", exception.getMessage());
                 }
             });
         } else {
@@ -50,7 +50,7 @@ public class VersionChecker {
                     consumer.accept(scanner.next());
                 }
             } catch (IOException exception) {
-                System.out.println("Cannot look for updates: " + exception.getMessage());
+                LocaleLogger.error("system.autobroadcast.update.error", exception.getMessage());
             }
         }
     }
