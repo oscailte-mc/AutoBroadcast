@@ -34,6 +34,7 @@ public class ConfigurationCache {
     private int interval;
     private double configVersion;
     private boolean enableBypassPermission;
+    private boolean randomizeAnnouncements;
     private List<String> announcements;
     private boolean bstatsEnabled;
 
@@ -61,8 +62,9 @@ public class ConfigurationCache {
 
         public ConfigurationCache build(YamlConfiguration config) {
             cache.interval = config.getInt("interval", 300);
-            cache.configVersion = config.getDouble("config-version");
+            cache.configVersion = config.getDouble("config-version", 2.0);
             cache.enableBypassPermission = config.getBoolean("enable-bypass-permission", false);
+            cache.randomizeAnnouncements = config.getBoolean("randomize-announcements", false);
             cache.announcements = config.getStringList("announcements");
             cache.bstatsEnabled = config.getBoolean("bstats_enabled", true);
             return build();
@@ -79,6 +81,10 @@ public class ConfigurationCache {
 
     public boolean isEnableBypassPermission() {
         return enableBypassPermission;
+    }
+
+    public boolean isRandomizeAnnouncements() {
+        return randomizeAnnouncements;
     }
 
     public List<String> getAnnouncements() {

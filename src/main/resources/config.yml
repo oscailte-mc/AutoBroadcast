@@ -25,6 +25,15 @@ announcements:
   - "<red>Here<gray> is an \nexample of a \nmultiple-line message."
   - "<gray>Once you have <red>updated<gray> your <gray>configuration<gray> make sure to <red>reload<grey> the plugin!\n<gray>/<red>autobroadcast reload <gray>:: <red>reloads<gray> the configuration files"
 
+# Whether or not announcements will be broadcast in a random order, otherwise they are repeated in the defined-order.
+randomize-announcements: false
+
+# Disabling bStats
+
+# If you don't want bStats to collect data from your server, you can disable it in the bStats config file. This file can be found in the /plugins/bStats/ folder.
+# bStats has nearly no effect on your server's performance and the sent data is completely anonymous. The collected data is important information for plugin authors
+# to improve their plugins and keep motivated. To value their work and effort, please keep bStats enabled.
+
 bstats_enabled: true
 
 # bStats does not collect any personal data. Most of the collected data is information about the plugin's server like player count, online mode,
@@ -36,12 +45,6 @@ bstats_enabled: true
 # Force-disabling bStats
 
 # If you don't trust me, and my settings, bStats has its own system to disable plugins' bStats.
-
-# Disabling bStats
-
-# If you don't want bStats to collect data from your server, you can disable it in the bStats config file. This file can be found in the /plugins/bStats/ folder.
-# bStats has nearly no effect on your server's performance and the sent data is completely anonymous. The collected data is important information for plugin authors
-# to improve their plugins and keep motivated. To value their work and effort, please keep bStats enabled.
 
 # Do not edit, this may break the plugin or your configuration file.
 config-version: 2.0

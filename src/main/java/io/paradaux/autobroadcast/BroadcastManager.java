@@ -31,6 +31,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BroadcastManager {
 
@@ -70,7 +71,12 @@ public class BroadcastManager {
                 }
 
                 if (!placeholderAPIWrapper.isPresent()) {
-                    adventure.sendMiniMessage(player, announcements.get(currentPlace));
+                    String announcement = announcements.get(currentPlace);
+                    if (config.isRandomizeAnnouncements()) {
+                        announcement = announcements.get(ThreadLocalRandom.current().nextInt(announcements.size()) % announcements.size());
+                    }
+
+                    adventure.sendMiniMessage(player, announcement);
                     nextAnnouncement();
                     return;
                 }
