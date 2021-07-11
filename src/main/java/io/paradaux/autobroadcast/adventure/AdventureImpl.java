@@ -28,13 +28,7 @@ public class AdventureImpl implements AutoCloseable {
 
     public AdventureImpl(AutoBroadcast plugin) {
         this.adventure = BukkitAudiences.create(plugin);
-        miniMessage = MiniMessage.builder()
-                .removeDefaultTransformations()
-                .transformation(TransformationType.COLOR)
-                .transformation(TransformationType.DECORATION)
-                .markdown()
-                .markdownFlavor(DiscordFlavor.get())
-                .build();
+        miniMessage = MiniMessage.get();
 
         AdventureImpl.instance = this;
     }

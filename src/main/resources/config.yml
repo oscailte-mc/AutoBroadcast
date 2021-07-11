@@ -1,8 +1,8 @@
 # Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
 # Thank you for using Paradaux's AutoBroadcast v${project.version}
 
-# How long, in seconds, between announcements.
-interval: 300
+# How long, in seconds, between announcements. The default is 15 to show all the examples
+interval: 15
 
 # This enables functionality which may break your AutoBroadcast Experience.
 # Any user with the "autobroadcast.bypass" permission will not receive broadcasts (including operators and users with "*")
@@ -10,16 +10,20 @@ interval: 300
 enable-bypass-permission: false
 
 # Make multiple-line announcements by using \n to begin a new line.
+# These announcements use the MiniMessgae format. You cannot use &-codes like &4
+# See the MiniMessage documentation: https://docs.adventure.kyori.net/minimessage.html
+
+# It allows for custom gradients, click events and loads more!
+# Here's some example usage:
 
 announcements:
-  - "<gray>Thanks for installing <red>AutoBroadcast<gray>!"
-  - "<gray>Make sure to <red>add <gray>and <red>configure<gray> broadcasts in the config.yml file!"
-  - "<gray>You can add an <red>unlimited<gray> amount of broadcasts."
+  - "<gray>Thanks for installing <red>AutoBroadcast</red>!"
+  - "<click:run_command:/say hello>Click me</click> to say hello"
+  - "<gradient:#5e4fa2:#f79459:red>Click <click:copy_to_clipboard:Haha you suck>this</click> to copy to your clipboard"
+  - "<bold><click:open_url:https://docs.adventure.kyori.net/minimessage.html>Click here to learn more about MiniMessage"
+  - "<hover:show_text:'<red>check out this sick <rainbow>rainbow'>Hover over me"
   - "<red>Here<gray> is an \nexample of a \nmultiple-line message."
   - "<gray>Once you have <red>updated<gray> your <gray>configuration<gray> make sure to <red>reload<grey> the plugin!\n<gray>/<red>autobroadcast reload <gray>:: <red>reloads<gray> the configuration files"
-
-
-# To allow for the continued release of updates, I keep a track of how many people are using AutoBroadcast. You can see for yourself here:
 
 bstats_enabled: true
 
@@ -27,7 +31,7 @@ bstats_enabled: true
 # Minecraft version, Java version, and more. All data gets sent and stored completely anonymously. Server IPs are only stored for rate-limiting
 # and not linked to the data. All data that is collected is publicly visible. If you are interested in what data is collected for your Minecraft
 # server, take a look at the pages for the plugins on your server. Please note that plugin authors can also send data that is customized for their plugin.
-# https://bstats.org/plugin/bukkit/HiberniaDiscord/8386
+# https://bstats.org/plugin/bukkit/HiberniaAutoBroadcast/9185
 
 # Force-disabling bStats
 
