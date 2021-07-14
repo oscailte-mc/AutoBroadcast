@@ -28,19 +28,20 @@ import io.paradaux.autobroadcast.config.ConfigurationCache;
 import io.paradaux.autobroadcast.hooks.PlaceholderAPIWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class BroadcastManager {
+public class BroadcastManager implements Cancellable {
 
     private static BroadcastManager instance;
     public static BroadcastManager getInstance() { return instance; }
 
     private final AdventureImpl adventure;
-
     private final PlaceholderAPIWrapper placeholderAPIWrapper;
+
     private final ConfigurationCache config;
     private final List<String> announcements;
     private final AutoBroadcast autoBroadcast;
@@ -62,42 +63,43 @@ public class BroadcastManager {
         currentPlace = 0;
 
         return Bukkit.getScheduler().runTaskTimerAsynchronously(autoBroadcast, () -> Bukkit.getScheduler().runTask(autoBroadcast, () -> {
-
-            // For every online player
             for (Player player : autoBroadcast.getServer().getOnlinePlayers()) {
                 // If the player is ineligible to receive announcements
                 if (config.isEnableBypassPermission()) {
                     if (player.hasPermission("autobroadcast.bypass")) return;
                 }
 
-                if (!placeholderAPIWrapper.isPresent()) {
-                    String announcement = announcements.get(currentPlace);
-                    if (config.isRandomizeAnnouncements()) {
-                        announcement = announcements.get(ThreadLocalRandom.current().nextInt(announcements.size()) % announcements.size());
-                    }
+                // Get the next announcement from the list
+                String announcement = announcements.get(currentPlace);
 
-                    adventure.sendMiniMessage(player, announcement);
-                    nextAnnouncement();
-                    return;
+                // If the announcement is random, ignore the current place.
+                if (config.isRandomizeAnnouncements()) {
+                    announcement = announcements.get(ThreadLocalRandom.current().nextInt(announcements.size()) % announcements.size());
                 }
 
-                // Parse PlaceholderAPI Placeholders and colorise the template.
-                String message = placeholderAPIWrapper.withPlaceholders(player, announcements.get(currentPlace));
-                adventure.sendMiniMessage(player, message);
-            }
+                // Parse PlaceholderAPI Placeholders
+                if (placeholderAPIWrapper.isPresent()) {
+                    announcement = placeholderAPIWrapper.withPlaceholders(player, announcements.get(currentPlace));
+                }
 
+                // Send the message to the player
+                adventure.sendMiniMessage(player, announcement);
+            }
             // Move onto the next announcement
-            nextAnnouncement();
+            currentPlace++;
+            if (currentPlace >= announcements.size()) { currentPlace = 0; }
         }), 60, config.getInterval() * 20L);
     }
 
-    public void nextAnnouncement() {
-        currentPlace++;
-
-        if (currentPlace >= announcements.size()) { currentPlace = 0; }
+    @Override
+    public boolean isCancelled() {
+        return task.isCancelled();
     }
 
-    public void cancel() {
-        task.cancel();
+    @Override
+    public void setCancelled(boolean b) {
+        if (b) {
+            task.cancel();
+        }
     }
 }

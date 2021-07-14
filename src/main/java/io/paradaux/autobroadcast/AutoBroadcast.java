@@ -78,7 +78,7 @@ public final class AutoBroadcast extends JavaPlugin {
     @Override
     public void onDisable() {
         if (BroadcastManager.getInstance() != null) {
-            BroadcastManager.getInstance().cancel();
+            BroadcastManager.getInstance().setCancelled(true);
             try {
                 AdventureImpl.getInstance().close();
             } catch (IOException e) {
