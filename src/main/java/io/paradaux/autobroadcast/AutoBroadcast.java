@@ -1,69 +1,84 @@
 /*
- * Copyright © 2020 Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
+ * Copyright (c) 2021, Rían Errity. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 3 only, as
+ * published by the Free Software Foundation.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 3 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 3 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Rían Errity <rian@paradaux.io> or visit https://paradaux.io
+ * if you need additional information or have any questions.
+ * See LICENSE.md for more details.
  */
 
 package io.paradaux.autobroadcast;
 
-import io.paradaux.autobroadcast.api.*;
+import io.paradaux.autobroadcast.adventure.AdventureImpl;
 import io.paradaux.autobroadcast.commands.AutoBroadcastCMD;
+import io.paradaux.autobroadcast.config.ConfigurationCache;
+import io.paradaux.autobroadcast.config.ConfigurationUtilities;
+import io.paradaux.autobroadcast.hooks.VersionChecker;
+import io.paradaux.autobroadcast.locale.LocaleLogger;
+import io.paradaux.autobroadcast.locale.LocaleManager;
 import org.bstats.bukkit.Metrics;
-
 import org.bukkit.plugin.java.JavaPlugin;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Objects;
-import java.util.logging.Logger;
 
+/**
+ * AutoBroadcast by Rían Errity, a simple MiniMessage-supporting auto-broadcasting system for Minecraft Spigot Servers, using the adventure
+ * framework for Minecraft 1.17.X
+ * @author Rían Errity
+ * @since 2.0.0
+ * */
 public final class AutoBroadcast extends JavaPlugin {
 
-    /* Lazy Dependency Injection */
-
-    // Manages everything to do with the repeating broadcasts.
-    private static BroadcastManager broadcastManager;
-    public static BroadcastManager getBroadcastManager() { return broadcastManager; }
-    public void setBroadcastManager(BroadcastManager broadcast) { broadcastManager = broadcast; }
-
-    // Handles config.yml/locale.yml
-    private static ConfigurationUtilities configurationUtilities;
-    public static ConfigurationUtilities getConfigurationUtilities() { return configurationUtilities; }
-
-    // config.yml cache
-    private static ConfigurationCache configurationCache;
-    public static ConfigurationCache getConfigurationCache() { return configurationCache; }
-    public void setConfigurationCache(ConfigurationCache configuration) { configurationCache = configuration; }
-
-    // locale.yml cache
-    private static LocaleCache localeCache;
-    public static LocaleCache getLocaleCache() { return localeCache; }
-    public void setLocaleCache(LocaleCache locale) { localeCache = locale; }
-
-
+    /**
+     * bStats Metrics
+     * */
+    private static Metrics metrics;
 
     @Override
     public void onEnable() {
 
         // First Run
         this.saveDefaultConfig();
-        saveResource("locale.yml", false);
+
+        new LocaleManager(this);
+
+        LocaleLogger localeLogger = new LocaleLogger(LoggerFactory.getLogger("AutoBroadcast"), true);
 
         // Pretty Ascii Art
-        startupMessage();
+        LocaleLogger.info("system.autobroadcast.startup");
 
         // Ensures the plugin is up-to-date with the version listed on spigot
         versionChecker();
 
         // config/locale cache definitions
-        configurationUtilities = new ConfigurationUtilities(this);
-        configurationUtilities.update(); // Make sure configuration files are up-to-date
+        new ConfigurationUtilities(this);
+        ConfigurationUtilities.getInstance().update(this.getConfig()); // Make sure configuration files are up-to-date
+        ConfigurationCache.builder().build(ConfigurationUtilities.getInstance().getConfig());
 
-        configurationCache = new ConfigurationCache(this, configurationUtilities.getConfig());
-        localeCache = new LocaleCache(configurationUtilities.getLocale());
+        // Register Adventure
+        new AdventureImpl(this);
 
         // Actual Broadcasting Mechanism
-
-        broadcastManager = new BroadcastManager(this, configurationCache);
+        new BroadcastManager(this);
 
         // Provides anonymous usage statistics
-        registerBstats();
+        registerBStats();
 
         // Register Commands
         registerCommands();
@@ -71,41 +86,34 @@ public final class AutoBroadcast extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        broadcastManager.cancel();
-    }
-
-
-
-    public void startupMessage() {
-        getLogger().info( "\n" +
-                "+ ------------------------------------ +\n" +
-                "|     Running AutoBroadcast v1.2.0     |\n" +
-                "|       © Rían Errity (Paradaux)       |\n" +
-                "|         https://paradaux.io          |\n" +
-                "+ ------------------------------------ +\n" +
-                "\n" +
-                "Are you looking for a freelance plugin developer?\n" +
-                "Think no further than Paradaux.io! rian@paradaux.io / Rían#6500\n"
-        );
+        if (BroadcastManager.getInstance() != null) {
+            BroadcastManager.getInstance().setCancelled(true);
+            try {
+                AdventureImpl.getInstance().close();
+            } catch (IOException e) {
+                LocaleLogger.error("system.error.generic", e.toString());
+            }
+        }
     }
 
     public void registerCommands() {
-        Objects.requireNonNull(this.getCommand("autobroadcast")).setExecutor(new AutoBroadcastCMD(this));
+        Objects.requireNonNull(this.getCommand("autobroadcast")).setExecutor(new AutoBroadcastCMD());
     }
 
-    public void registerBstats() {
-        if (!configurationCache.isBstatsEnabled()) return;
-        Metrics metrics = new Metrics(this, 9185);
+    public void registerBStats() {
+        if (!ConfigurationCache.getInstance().isBstatsEnabled()) {
+            return;
+        }
+
+        metrics = new Metrics(this, 9185);
     }
 
     public void versionChecker() {
-        Logger logger = this.getLogger();
-
         new VersionChecker(this, 69377).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                logger.info("There are no new updates available");
+                LocaleLogger.info("system.autobroadcast.update.unavailable");
             } else {
-                logger.info("There is a new update available. \n Please update: https://www.spigotmc.org/resources/autobroadcast.69377/");
+                LocaleLogger.info("system.autobroadcast.update.available");
             }
         });
     }
