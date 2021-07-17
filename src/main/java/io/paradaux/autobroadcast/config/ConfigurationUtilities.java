@@ -25,20 +25,19 @@ package io.paradaux.autobroadcast.config;
 
 import io.paradaux.autobroadcast.AutoBroadcast;
 import io.paradaux.autobroadcast.BroadcastManager;
-import io.paradaux.autobroadcast.adventure.AdventureImpl;
 import io.paradaux.autobroadcast.locale.LocaleLogger;
-import io.paradaux.autobroadcast.locale.LocaleManager;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Contains various saving, reloading and updating utilities for manipulating the configuration files.
+ * @author Rían Errity
+ * @since 2.0.0
+ * */
 public class ConfigurationUtilities {
 
     private static ConfigurationUtilities instance;
@@ -68,7 +67,7 @@ public class ConfigurationUtilities {
     public void reload() {
         BroadcastManager broadcastManager = BroadcastManager.getInstance();
         ConfigurationCache.builder().build(this.getConfig());
-        broadcastManager.cancel();
+        broadcastManager.setCancelled(true);
         new BroadcastManager(autoBroadcast);
     }
 
