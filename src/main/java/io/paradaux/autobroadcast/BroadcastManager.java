@@ -50,6 +50,7 @@ public class BroadcastManager implements Cancellable {
     private final ConfigurationCache config;
     private final List<String> announcements;
     private final AutoBroadcast autoBroadcast;
+    private final RandomUtil random;
     private final BukkitTask task;
     private int currentPlace;
 
@@ -60,6 +61,7 @@ public class BroadcastManager implements Cancellable {
         this.placeholderAPIWrapper = new PlaceholderAPIWrapper();
         this.task = createTaskTimer();
         this.adventure = AdventureImpl.getInstance();
+        this.random = new RandomUtil();
 
         BroadcastManager.instance = this;
     }
@@ -79,7 +81,7 @@ public class BroadcastManager implements Cancellable {
 
                 // If the announcement is random, ignore the current place.
                 if (config.isRandomizeAnnouncements()) {
-                    announcement = announcements.get(ThreadLocalRandom.current().nextInt(announcements.size()) % announcements.size());
+                    announcement = random.fromCollection(announcements);
                 }
 
                 // Parse PlaceholderAPI Placeholders
