@@ -60,7 +60,7 @@ public class ConfigurationUtilities {
         try {
             config.save(configFile);
         } catch (IOException exception) {
-            autoBroadcast.getLogger().severe("Error whilst updating config.");
+            LocaleLogger.error("system.autobradcast.config.save.error", exception.getMessage());
         }
     }
 
@@ -72,13 +72,14 @@ public class ConfigurationUtilities {
     }
 
     public void update(FileConfiguration config) {
-        Logger logger = autoBroadcast.getLogger();
-
         if (config.getDouble("config-version") < 2.0d) {
+            LocaleLogger.info("system.autobroadcast.config.update.version-change.start", config.getDouble("config-version") + "", 2.0d + "");
             LocaleLogger.info("system.autobroadcast.config.update.version-change.legacy", String.valueOf(config.getDouble("config-version")));
             configFile.renameTo(new File(autoBroadcast.getDataFolder(), "config.yml.legacy"));
             autoBroadcast.saveDefaultConfig();
         }
+
+        LocaleLogger.info("system.autobroadcast.config.update.version-change.comments-lost");
     }
 
 }

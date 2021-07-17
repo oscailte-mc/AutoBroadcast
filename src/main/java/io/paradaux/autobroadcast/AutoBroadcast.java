@@ -58,7 +58,7 @@ public final class AutoBroadcast extends JavaPlugin {
 
         new LocaleManager(this);
 
-        LocaleLogger localeLogger = new LocaleLogger(LoggerFactory.getLogger("AutoBroadcast"));
+        LocaleLogger localeLogger = new LocaleLogger(LoggerFactory.getLogger("AutoBroadcast"), true);
 
         // Pretty Ascii Art
         LocaleLogger.info("system.autobroadcast.startup");
