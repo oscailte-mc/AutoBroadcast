@@ -25,6 +25,11 @@ package io.paradaux.autobroadcast.locale;
 
 import org.slf4j.Logger;
 
+/**
+ * A wrapper on top of SLF4J which allows for the logging of system messages using locale entries to provide easier internationalisation.
+ * @author Rían Errity
+ * @since 2.0.0
+ * */
 public class LocaleLogger {
 
     private static Logger logger;

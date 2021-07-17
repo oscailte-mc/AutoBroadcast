@@ -32,21 +32,36 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 
+/**
+ * AdventureImpl is a wrapper around the kyori/adventure Framework for Minecraft Components.
+ * @author Rían Errity
+ * @since 2.0.0
+ * */
 public class AdventureImpl implements AutoCloseable {
 
     private static AdventureImpl instance;
+
+    /**
+     * Singleton field containing the MiniMessage parser in use.
+     * */
     private static MiniMessage miniMessage;
 
+    /**
+     * Singleton access to the adventure implementation.
+     * */
     public static AdventureImpl getInstance() {
+
         return instance;
     }
 
-    public static MiniMessage getMiniMessage() {
-        return miniMessage;
-    }
-
+    /**
+     * The Adventure API
+     * */
     private BukkitAudiences adventure;
 
+    /**
+     * Initialise the Adventure Implementation using the Bukkit Platform.
+     * */
     public AdventureImpl(AutoBroadcast plugin) {
         this.adventure = BukkitAudiences.create(plugin);
         miniMessage = MiniMessage.get();
@@ -55,16 +70,28 @@ public class AdventureImpl implements AutoCloseable {
     }
 
     /**
-     * Send a MiniMessage
+     * Sends a chat component to the specified {@link Player}, interpreting the provided String as a MiniMessage-serialised Adventure Component.
+     * @param player The player you wish to send the component to
+     * @param message A MiniMessage-serialised Adventure component.
      * */
     public void sendMiniMessage(Player player, String message) {
         adventure().player(player).sendMessage(miniMessage.parse(message));
     }
 
+    /**
+     * Sends a chat component to the specified {@link CommandSender}, interpreting the provided String as a MiniMessage-serialised Adventure Component.
+     * @param sender The sender you wish to send the component to
+     * @param message A MiniMessage-serialised Adventure component.
+     * */
     public void sendMiniMessage(CommandSender sender, String message) {
         adventure().sender(sender).sendMessage(miniMessage.parse(message));
     }
 
+    /**
+     * Returns the BukkitAudience Instance.
+     * @return BukkitAudiences
+     * @throws IllegalStateException Thrown when the audience is invalid.
+     * */
     @NonNull
     public BukkitAudiences adventure() {
         if(this.adventure == null) {
@@ -73,6 +100,10 @@ public class AdventureImpl implements AutoCloseable {
         return this.adventure;
     }
 
+    /**
+     * Disables the Adventure integration, preventing further use internally and by dependencies.
+     * @throws IOException caused by closure.
+     * */
     @Override
     public void close() throws IOException {
         if(this.adventure != null) {

@@ -28,6 +28,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+/**
+ * PlaceholderAPI wrapper for easily hooking into PlaceholderAPI
+ * @author egg82
+ * @since 2.0.0
+ * */
 public class PlaceholderAPIWrapper {
 
     public boolean isPresent() {

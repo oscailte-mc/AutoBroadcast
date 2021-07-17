@@ -33,6 +33,19 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 
+/**
+ * Version Checker for SpigotMC plugins.
+ * @author MSWS
+ * @author DevCyntrix
+ * @author patri9ck
+ * @author lokka30
+ * @author Pistonmaster
+ * @author Emilius123
+ * @author Chaffic
+ * @author Rían Errity
+ * @since 2.0.0
+ * @deprecated This is to be replaced with a better system in a later release.
+ * */
 public record VersionChecker(Plugin plugin, int resourceId) {
 
     public void getVersion(final Consumer<String> consumer) {

@@ -31,21 +31,32 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The /autobroadcast command and related subcommands, providing user access to see the credits and to reload the plugin's configuration.
+ * @author Rían Errity
+ * @since 2.0.0
+ * */
 public class AutoBroadcastCMD implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-
+        // Show the credits.
         if (args.length <= 0) {
             AdventureImpl.getInstance().sendMiniMessage(sender, LocaleManager.get("command.autobroadcast.content"));
         }
 
-        if ("reload".equals(args[0])) {
-            if (!sender.hasPermission("autobroadcast.reload")) {
-                return true;
+        switch (args[0]) {
+            case "reload": {
+                if (!sender.hasPermission("autobroadcast.reload")) {
+                    return true;
+                }
+                ConfigurationUtilities.getInstance().reload();
+                AdventureImpl.getInstance().sendMiniMessage(sender, LocaleManager.get("command.autobroadcast.reload.content"));
             }
-            ConfigurationUtilities.getInstance().reload();
-            AdventureImpl.getInstance().sendMiniMessage(sender, LocaleManager.get("command.autobroadcast.reload.content"));
+
+            default: {
+                AdventureImpl.getInstance().sendMiniMessage(sender, LocaleManager.get("command.autobroadcast.content"));
+            }
         }
         return true;
     }

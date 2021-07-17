@@ -26,6 +26,11 @@ package io.paradaux.autobroadcast.config;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.util.List;
 
+/**
+ * Represents a Plain Ol' Java Representation of the "config.yml" configuration file.
+ * @author Rían Errity
+ * @since 2.0.0
+ * */
 public class ConfigurationCache {
 
     private static ConfigurationCache instance;

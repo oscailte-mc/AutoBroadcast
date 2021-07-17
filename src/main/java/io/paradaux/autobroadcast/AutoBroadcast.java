@@ -37,8 +37,17 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * AutoBroadcast by Rían Errity, a simple MiniMessage-supporting auto-broadcasting system for Minecraft Spigot Servers, using the adventure
+ * framework for Minecraft 1.17.X
+ * @author Rían Errity
+ * @since 2.0.0
+ * */
 public final class AutoBroadcast extends JavaPlugin {
 
+    /**
+     * bStats Metrics
+     * */
     private static Metrics metrics;
 
     @Override

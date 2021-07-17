@@ -33,6 +33,12 @@ import java.util.Objects;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+/**
+ * Utility to loading and holding singleton instances of the ResourceBundle which serves as the locale/internationalisation system for the
+ * plugin.
+ * @author Rían Errity
+ * @since 2.0.0
+ * */
 public class LocaleManager {
 
     private static final File locale = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "locale.properties");
