@@ -33,9 +33,15 @@ import org.slf4j.Logger;
 public class LocaleLogger {
 
     private static Logger logger;
+    private static boolean debug;
 
-    public LocaleLogger(Logger logger) {
+    public LocaleLogger(Logger logger, boolean debug) {
         LocaleLogger.logger = logger;
+        LocaleLogger.debug = debug;
+    }
+
+    public static void toggleDebug() {
+        debug = !debug;
     }
 
     public static void info(String str, String... args) {
@@ -47,7 +53,9 @@ public class LocaleLogger {
     }
 
     public static void debug(String str, String... args) {
-        logger.debug(LocaleManager.get(str), (Object[]) args);
+        if (debug) {
+            logger.debug(LocaleManager.get(str), (Object[]) args);
+        }
     }
 
     public static void error(String str, String... args) {
