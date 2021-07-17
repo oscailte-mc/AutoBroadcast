@@ -1,7 +1,8 @@
 # Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
 # Thank you for using Paradaux's AutoBroadcast v2.0.0
 
-# How long, in seconds, between announcements. The default is 15 to show all the examples
+# How long, in seconds, between announcements. The default is 15 to show all the examples, but 300 seconds (5 minutes)
+# would be my recommended minimum so as not to annoy your players.
 interval: 15
 
 # This enables functionality which may break your AutoBroadcast Experience.
