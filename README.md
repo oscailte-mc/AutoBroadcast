@@ -23,6 +23,7 @@ without contacting me prior.
 - [ ] Fancy github badges
 - [ ] CD
 - [ ] Add configuration support for titles, sounds and that sort of thing. 
+- [ ] More pretty MiniMessage examples.
 
 Feature suggestions are always welcome, however this is aiming to be a simple and lightweight plugin, so it's unlikely
 I'll implement everything. 
