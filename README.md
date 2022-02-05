@@ -1,20 +1,13 @@
 # AutoBroadcast
 
-AutoBroadcast is a 1.17.X AutoBroadcasting plugin with full support for MiniMessage/Adventure components.
+AutoBroadcast is a simple and asynchronous plugin which allows users to broadcast configurable messages at regular intervals. 
+It supports both [MiniMessage](https://docs.adventure.kyori.net/minimessage) and [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) allowing for a great degree of customizability. 
 
-See the documentation: https://docs.conch.rocks/autobroadcast
-
-## Support
-
-Before looking for support please consult the documentation linked above. Otherwise, support is available here:
-https://paradaux.io/discord 
-
-This support is a courtesy and not a service. 
+There is documentation on how to configure and set up the plugin [here](https://docs.conch.rocks/autobroadcast/).
 
 ## Contributing
-Contributions are always welcome, but merges are not guaranteed. I don't appreciate PRs which essentially re-write the plugin
-without contacting me prior. 
 
+Contributions are always welcome, please base your PRs off of `autobroadcast:develop` rather than master.
 ## Tasks
 
 - [ ] New version checking and notification system
