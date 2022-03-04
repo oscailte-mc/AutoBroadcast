@@ -64,7 +64,7 @@ public class AdventureImpl implements AutoCloseable {
      * */
     public AdventureImpl(AutoBroadcast plugin) {
         this.adventure = BukkitAudiences.create(plugin);
-        miniMessage = MiniMessage.get();
+        miniMessage = MiniMessage.miniMessage();
 
         AdventureImpl.instance = this;
     }
@@ -75,7 +75,7 @@ public class AdventureImpl implements AutoCloseable {
      * @param message A MiniMessage-serialised Adventure component.
      * */
     public void sendMiniMessage(Player player, String message) {
-        adventure().player(player).sendMessage(miniMessage.parse(message));
+        adventure().player(player).sendMessage(miniMessage.deserialize(message));
     }
 
     /**
@@ -84,7 +84,7 @@ public class AdventureImpl implements AutoCloseable {
      * @param message A MiniMessage-serialised Adventure component.
      * */
     public void sendMiniMessage(CommandSender sender, String message) {
-        adventure().sender(sender).sendMessage(miniMessage.parse(message));
+        adventure().sender(sender).sendMessage(miniMessage.deserialize(message));
     }
 
     /**
