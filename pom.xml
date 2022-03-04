@@ -153,5 +153,11 @@
             <version>2.10.10</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+            <version>3.21.0</version>
+        </dependency>
     </dependencies>
 </project>
