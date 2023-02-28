@@ -32,7 +32,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * BroadcastManager holds the BukkitTask responsible for running the announcements in-game.

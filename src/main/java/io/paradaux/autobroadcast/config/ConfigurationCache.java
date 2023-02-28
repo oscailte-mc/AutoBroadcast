@@ -24,6 +24,7 @@
 package io.paradaux.autobroadcast.config;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.util.List;
 
 /**

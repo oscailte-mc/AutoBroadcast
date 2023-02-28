@@ -48,7 +48,8 @@ public class LocaleManager {
     public LocaleManager(Plugin p) {
         if (!locale.exists()) {
             p.saveResource("AutoBroadcast_en_US.properties", false);
-            new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast")).getDataFolder(), "AutoBroadcast_en_US.properties").renameTo(locale);
+            new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("AutoBroadcast"))
+                    .getDataFolder(), "AutoBroadcast_en_US.properties").renameTo(locale);
         }
 
         try (FileInputStream fis = new FileInputStream(locale)) {

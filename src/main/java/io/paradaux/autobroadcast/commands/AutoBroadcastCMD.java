@@ -55,6 +55,16 @@ public class AutoBroadcastCMD implements CommandExecutor {
                 break;
             }
 
+            // TODO
+            case "trigger": {
+                break;
+            }
+
+            // TODO
+            case "update": {
+                break;
+            }
+
             default: {
                 AdventureImpl.getInstance().sendMiniMessage(sender, LocaleManager.get("command.autobroadcast.content"));
             }

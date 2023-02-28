@@ -31,7 +31,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * Contains various saving, reloading and updating utilities for manipulating the configuration files.
@@ -75,7 +74,10 @@ public class ConfigurationUtilities {
         if (config.getDouble("config-version") < 2.0d) {
             LocaleLogger.info("system.autobroadcast.config.update.version-change.start", config.getDouble("config-version") + "", 2.0d + "");
             LocaleLogger.info("system.autobroadcast.config.update.version-change.legacy", String.valueOf(config.getDouble("config-version")));
-            configFile.renameTo(new File(autoBroadcast.getDataFolder(), "config.yml.legacy"));
+            if (!configFile.renameTo(new File(autoBroadcast.getDataFolder(), "config.yml.legacy"))) {
+                LocaleLogger.error("system.autobroadcast.config.update.rename-failure");
+            }
+
             autoBroadcast.saveDefaultConfig();
         }
 
