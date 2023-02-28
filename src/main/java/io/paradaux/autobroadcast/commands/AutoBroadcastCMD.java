@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, Rían Errity. All rights reserved.
+ * Copyright (c) 2023, Rían Errity. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -41,7 +41,7 @@ public class AutoBroadcastCMD implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // Show the credits.
-        if (args.length <= 0) {
+        if (args.length == 0) {
             AdventureImpl.getInstance().sendMiniMessage(sender, LocaleManager.get("command.autobroadcast.content"));
         }
 
@@ -52,6 +52,7 @@ public class AutoBroadcastCMD implements CommandExecutor {
                 }
                 ConfigurationUtilities.getInstance().reload();
                 AdventureImpl.getInstance().sendMiniMessage(sender, LocaleManager.get("command.autobroadcast.reload.content"));
+                break;
             }
 
             default: {

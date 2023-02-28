@@ -1,9 +1,9 @@
 # Property of Rían Errity Licensed under GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007. See <LICENSE.md>
-# Thank you for using Paradaux's AutoBroadcast v2.0.2
+# Thank you for using Paradaux's AutoBroadcast v2.0.3
 
 # How long, in seconds, between announcements. The default is 15 to show all the examples, but 300 seconds (5 minutes)
 # would be my recommended minimum so as not to annoy your players.
-interval: 15
+interval: 5
 
 # This enables functionality which may break your AutoBroadcast Experience.
 # Any user with the "autobroadcast.bypass" permission will not receive broadcasts (including operators and users with "*")
@@ -19,7 +19,7 @@ enable-bypass-permission: false
 
 announcements:
   - "<gray>Thanks for installing <red>AutoBroadcast</red>!"
-  - "<click:run_command:/say hello>Click me</click> to say hello"
+  - "<click:run_command:say Hello>Click me</click> to say hello"
   - "<gradient:#5e4fa2:#f79459:red>Click <click:copy_to_clipboard:Haha you suck>this</click> to copy to your clipboard"
   - "<bold><click:open_url:https://docs.adventure.kyori.net/minimessage.html>Click here to learn more about MiniMessage"
   - "<hover:show_text:'<red>check out this sick <rainbow>rainbow'>Hover over me"
